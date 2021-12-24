@@ -50,7 +50,6 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: DomenViewModel by lazy {
         ViewModelProviders.of(this).get(DomenViewModel::class.java)
     }
-    //
     private val userViewModel:UserViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
