@@ -56,10 +56,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         viewModel.readDomen()
-        chackCameraPerimition()
         chackLocationPerimition()
+        startScaneer()
     }
-//
+    //
     private fun chackLocationPerimition() {
         val task = currentlocation.lastLocation
         if (ActivityCompat.checkSelfPermission(
@@ -88,27 +88,10 @@ class MainActivity : AppCompatActivity() {
                 }
 
             })
-            Toast.makeText(this, "${locati.longitude}  ${locati.latitude}", Toast.LENGTH_SHORT).show()
-
         }
     }
 
 
-    private fun chackCameraPerimition() {
-
-        if (ContextCompat.checkSelfPermission(
-                this,
-                android.Manifest.permission.CAMERA
-            ) == PackageManager.PERMISSION_DENIED
-        ) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(android.Manifest.permission.CAMERA),
-                123
-            )
-        } else
-            startScaneer()
-    }
 
     fun startScaneer() {
 
@@ -163,7 +146,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_settings -> {
-               userViewModel.deleteAllUser()
+                userViewModel.deleteAllUser()
                 startActivity(Intent(this,Login::class.java))
                 finish()
                 true
