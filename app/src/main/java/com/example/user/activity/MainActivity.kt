@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
         chackCameraPerimition()
         chackLocationPerimition()
     }
-
+//
     private fun chackLocationPerimition() {
         val task = currentlocation.lastLocation
         if (ActivityCompat.checkSelfPermission(
