@@ -26,20 +26,11 @@ class Login : AppCompatActivity() {
         binding= ActivityLoginBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        checkLogin()
         viewModel.readUser()
         chackUser()
         chackCameraPerimition()
     }
 
-    private fun checkLogin() {
-        userViewModel.readNotes.observe(this, Observer {
-            if(it.isNotEmpty())
-            {
-             startActivity(Intent(this,MainActivity::class.java))
-            }
-        })
-    }
 
 
     private fun chackUser() {

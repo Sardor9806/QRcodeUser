@@ -60,7 +60,6 @@ class MainActivity : AppCompatActivity() {
         chackLocationPerimition()
     }
 
-
     private fun chackLocationPerimition() {
         val task = currentlocation.lastLocation
         if (ActivityCompat.checkSelfPermission(
