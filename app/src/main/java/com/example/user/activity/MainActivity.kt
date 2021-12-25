@@ -58,8 +58,19 @@ class MainActivity : AppCompatActivity() {
         viewModel.readDomen()
         chackLocationPerimition()
         startScaneer()
+        adminChatting()
     }
-    //
+
+    private fun adminChatting() {
+        binding.chat.setOnClickListener {
+            userViewModel.readNotes.observe(this, Observer {
+                val intent=Intent(this,UserChatting::class.java)
+                intent.putExtra("login",it[0].userName)
+                startActivity(intent)
+            })
+        }
+
+    }
     private fun chackLocationPerimition() {
         val task = currentlocation.lastLocation
         if (ActivityCompat.checkSelfPermission(
@@ -81,7 +92,9 @@ class MainActivity : AppCompatActivity() {
         task.addOnSuccessListener { locati->
             userViewModel.readNotes.observe(this, Observer {
                 try {
-                    locationViewModel.updataLocation(Locationentity(login =  it[0].userName,x=locati.latitude.toString(),y=locati.longitude.toString()))
+                    locationViewModel.updataLocation(Locationentity(login =  it[0].userName,
+                        x=locati.latitude.toString(),
+                        y=locati.longitude.toString()))
                 }catch (e:Exception)
                 {
 
