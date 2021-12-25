@@ -42,6 +42,7 @@ class UserChatting : AppCompatActivity() {
                     messageArray.add(it)
                 }
                 adapterNew.notifyDataSetChanged()
+                binding.messageRecyclerView.scrollToPosition(messageArray.size-1)
             })
     }
 
