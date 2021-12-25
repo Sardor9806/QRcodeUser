@@ -7,7 +7,9 @@
         <entry key="..\:/QRcodeUser1/app/src/main/res/drawable/come_message_bacground.xml" value="0.309375" />
         <entry key="..\:/QRcodeUser1/app/src/main/res/layout/activity_login.xml" value="0.29322916666666665" />
         <entry key="..\:/QRcodeUser1/app/src/main/res/layout/activity_user_chatting.xml" value="0.29322916666666665" />
+        <entry key="..\:/QRcodeUser1/app/src/main/res/layout/come_message.xml" value="0.29322916666666665" />
         <entry key="..\:/QRcodeUser1/app/src/main/res/layout/item_user_chatting.xml" value="0.29322916666666665" />
+        <entry key="..\:/QRcodeUser1/app/src/main/res/layout/send_message.xml" value="0.29322916666666665" />
         <entry key="..\:/User/app/src/main/res/drawable-v24/ic_baseline_chat_24.xml" value="0.309375" />
         <entry key="..\:/User/app/src/main/res/layout/activity_login.xml" value="0.29322916666666665" />
         <entry key="..\:/User/app/src/main/res/layout/activity_main.xml" value="0.2791666666666667" />
