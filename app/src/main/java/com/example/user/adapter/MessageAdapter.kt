@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.user.R
 import com.example.user.entity.UserChatAddEntity
 
-class MessageAdapter(val context:Context,val messageList:ArrayList<UserChatAddEntity>):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MessageAdapter(val context:Context,val messageList:ArrayList<UserChatAddEntity>,val listener:MessageSetOnClickListener):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     val admindan=1
     val userdan=2
@@ -35,11 +35,13 @@ class MessageAdapter(val context:Context,val messageList:ArrayList<UserChatAddEn
         if(holder.javaClass==SendViewHolder::class.java)
         {
             val viewHolder = holder as SendViewHolder
-            holder.userMessage.text=currentMessage.user
+            viewHolder.userMessage.text=currentMessage.user
+            viewHolder.delete= currentMessage.login_chat.toString()
         }
         else{
             val viewHolder = holder as ComeViewHolder
-            holder.adminMessage.text=currentMessage.admin
+            viewHolder.adminMessage.text=currentMessage.admin
+            viewHolder.delete= currentMessage.login_chat.toString()
         }
     }
 
@@ -53,10 +55,27 @@ class MessageAdapter(val context:Context,val messageList:ArrayList<UserChatAddEn
             userdan
         }
     }
-    class SendViewHolder(itemview:View):RecyclerView.ViewHolder(itemview){
+   inner class SendViewHolder(itemview:View):RecyclerView.ViewHolder(itemview){
         val userMessage = itemview.findViewById<TextView>(R.id.send_message_new)
+        var delete:String=""
+        init {
+            itemview.setOnClickListener {
+                listener.listener(delete)
+            }
+
+        }
     }
-    class ComeViewHolder(itemview:View):RecyclerView.ViewHolder(itemview){
+  inner  class ComeViewHolder(itemview:View):RecyclerView.ViewHolder(itemview){
         val adminMessage=itemview.findViewById<TextView>(R.id.come_message_new)
+        var delete:String=""
+        init {
+            itemview.setOnClickListener {
+                listener.listener(delete)
+            }
+
+        }
+    }
+    interface MessageSetOnClickListener{
+        fun listener(userChatAddEntity: String)
     }
 }

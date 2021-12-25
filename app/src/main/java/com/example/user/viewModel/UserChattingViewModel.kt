@@ -16,8 +16,9 @@ class UserChattingViewModel: ViewModel() {
     private val _messsage = MutableLiveData<List<UserChatAddEntity>>()
     val message: LiveData<List<UserChatAddEntity>>
         get() = _messsage
-
+    var t:String=""
     fun insertChatUser(userChatAddEntity: UserChatAddEntity) {
+
         val messageDb = FirebaseDatabase.getInstance().getReference("admin"+userChatAddEntity.login_chat.toString())
         userChatAddEntity.login_chat=messageDb.push().key
         messageDb.child(userChatAddEntity.login_chat!!).setValue(userChatAddEntity)
@@ -33,7 +34,7 @@ class UserChattingViewModel: ViewModel() {
     }
 
     fun readLocation(readUser:String){
-
+        t=readUser
         val messageDb = FirebaseDatabase.getInstance().getReference("admin"+readUser)
 
         messageDb.addValueEventListener(object : ValueEventListener
@@ -58,9 +59,9 @@ class UserChattingViewModel: ViewModel() {
 
 
 
-    fun deleteLocation(userChatAddEntity: UserChatAddEntity) {
-        val messageDb = FirebaseDatabase.getInstance().getReference("admin"+userChatAddEntity.login_chat.toString())
-        messageDb.child(userChatAddEntity.login_chat!!).setValue(null)
+    fun deleteLocation(userChatAddEntity: String) {
+        val messageDb = FirebaseDatabase.getInstance().getReference("admin"+t)
+        messageDb.child(userChatAddEntity).setValue(null)
             .addOnCompleteListener {
                 if(it.isSuccessful)
                 {
