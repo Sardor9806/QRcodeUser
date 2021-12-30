@@ -1,10 +1,13 @@
 package com.example.user.webView
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log.d
 import android.view.View
+import android.webkit.WebChromeClient
 import com.example.user.R
 import com.example.user.databinding.ActivityOpenWebViewBinding
 
@@ -26,13 +29,8 @@ class OpenWebView : AppCompatActivity() {
                 binding.image.setImageResource(R.drawable.image_go)
                 Handler().postDelayed({
                     try {
-                        binding.image.visibility = View.GONE
-                        binding.vebView.visibility = View.VISIBLE
-                        binding.vebView.loadUrl(url)
-                        binding.vebView.settings.javaScriptEnabled = true
-                        binding.vebView.settings.allowContentAccess = true
-                        binding.vebView.settings.domStorageEnabled = true
-                        binding.vebView.settings.useWideViewPort = true
+                       startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                        finish()
                     }catch (e:Exception)
                     {
                         d("sardor","keldi $e")
