@@ -65,6 +65,7 @@ class MainActivity : AppCompatActivity() {
         }catch (e:Exception)
         {
             Toast.makeText(this, "Xatolik:  $e", Toast.LENGTH_LONG).show()
+            sardor
         }
 
     }

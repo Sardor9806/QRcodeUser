@@ -16,7 +16,9 @@ import com.example.user.viewModel.LoginViewModel
 class  SplashScreen : AppCompatActivity() {
 
     private val userViewModel: UserViewModel by viewModels()
+
     private val viewModel: LoginViewModel by lazy { ViewModelProviders.of(this).get(LoginViewModel::class.java) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
