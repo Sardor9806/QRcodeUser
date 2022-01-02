@@ -39,7 +39,11 @@ class Login : AppCompatActivity() {
         viewModel.readUser()
         chackUser()
         chackPerimition()
+
     }
+
+
+
     private fun chackUser() {
         binding.signin.setOnClickListener {
             if(binding.addLogin.text.toString()!="" && binding.parol.text.toString()!="")
@@ -52,7 +56,6 @@ class Login : AppCompatActivity() {
                         finish()
                     }
                 }
-                Toast.makeText(this, "Login yoki parol xato!!", Toast.LENGTH_SHORT).show()
             })
             }
         }

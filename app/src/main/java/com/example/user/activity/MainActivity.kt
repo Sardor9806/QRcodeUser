@@ -1,7 +1,9 @@
 package com.example.user.activity
 
+import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,11 +12,9 @@ import android.os.Vibrator
 import android.util.Log.d
 import android.view.Menu
 import android.view.MenuItem
-
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.budiyev.android.codescanner.AutoFocusMode
@@ -25,10 +25,12 @@ import com.budiyev.android.codescanner.ScanMode
 import com.example.user.R
 import com.example.user.databinding.ActivityMainBinding
 import com.example.user.entity.Locationentity
+import com.example.user.entity.UserEntity
 import com.example.user.login.Login
 import com.example.user.room.UserViewModel
 import com.example.user.viewModel.DomenViewModel
 import com.example.user.viewModel.LocationViewModel
+import com.example.user.viewModel.LoginViewModel
 import com.example.user.webView.OpenWebView
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -39,13 +41,11 @@ class MainActivity : AppCompatActivity() {
 
     private val codeScanner: CodeScanner by lazy { CodeScanner(this, binding.qrScaneer) }
 
-    private val currentlocation: FusedLocationProviderClient by lazy {
-        LocationServices.getFusedLocationProviderClient(
-            this
-        )
-    }
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     private val locationViewModel:LocationViewModel by lazy { ViewModelProviders.of(this).get(LocationViewModel::class.java) }
+
+    private val loginViewModel:LoginViewModel by lazy { ViewModelProviders.of(this).get(LoginViewModel::class.java) }
 
     private val viewModel: DomenViewModel by lazy {
         ViewModelProviders.of(this).get(DomenViewModel::class.java)
@@ -55,10 +55,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        viewModel.readDomen()
-        chackLocationPerimition()
-        startScaneer()
-        adminChatting()
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        loginViewModel.readUser()
+        try {
+            viewModel.readDomen()
+            chackLocationPerimition()
+            startScaneer()
+            adminChatting()
+        }catch (e:Exception)
+        {
+            Toast.makeText(this, "Xatolik:  $e", Toast.LENGTH_LONG).show()
+        }
+
     }
 
     private fun adminChatting() {
@@ -72,36 +80,33 @@ class MainActivity : AppCompatActivity() {
 
     }
     private fun chackLocationPerimition() {
-        val task = currentlocation.lastLocation
         if (ActivityCompat.checkSelfPermission(
                 this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED &&
-            ActivityCompat.checkSelfPermission(
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
                 this,
-                android.Manifest.permission.ACCESS_COARSE_LOCATION
+                Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
-                101
-            )
+
             return
         }
-        task.addOnSuccessListener { locati->
-            userViewModel.readNotes.observe(this, Observer {
-                try {
-                    locationViewModel.updataLocation(Locationentity(login =  it[0].userName,
-                        x=locati.latitude.toString(),
-                        y=locati.longitude.toString()))
-                }catch (e:Exception)
-                {
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener { location : Location? ->
+                userViewModel.readNotes.observe(this, Observer {
+                    try {
+                        locationViewModel.updataLocation(Locationentity(login =  it[0].userName,
+                            x=location?.latitude.toString(),
+                            y=location?.longitude.toString()))
+                    }catch (e:Exception)
+                    {
 
-                }
+                    }
 
-            })
-        }
+                })
+            }
+
+
     }
 
 
@@ -114,7 +119,6 @@ class MainActivity : AppCompatActivity() {
         codeScanner.scanMode = ScanMode.SINGLE
         codeScanner.isAutoFocusEnabled = true
         codeScanner.isFlashEnabled = false
-
         codeScanner.decodeCallback = DecodeCallback { result ->
             runOnUiThread {
                 val vibrator = getSystemService(VIBRATOR_SERVICE) as Vibrator
@@ -126,13 +130,12 @@ class MainActivity : AppCompatActivity() {
                         )
                     )
                 } else {
-                    vibrator.vibrate(1500)
+                    vibrator.vibrate(500)
                 }
                 var domen: Boolean = false
                 viewModel.domens.observe(this, Observer {
                     it.forEach {
-
-                        if (it.domenName?.uppercase() == result.text.uppercase()) {
+                        if (result.text.contains(it.domenName.toString())) {
                             domen = true
                         }
                     }
