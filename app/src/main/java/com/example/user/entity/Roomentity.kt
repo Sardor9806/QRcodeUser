@@ -8,5 +8,6 @@ import androidx.room.PrimaryKey
 data class Roomentity (
         @PrimaryKey(autoGenerate = true)
         val id:Int=0,
-        val userName:String
+        val userName:String,
+        val passwor:String
         )

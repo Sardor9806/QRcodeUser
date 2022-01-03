@@ -45,7 +45,12 @@ class LoginViewModel: ViewModel() {
         })
     }
 
-
+        fun updataStatus(userEntity: UserEntity)
+        {
+            val map = HashMap<String,Any>()
+            map["status"] = userEntity.status.toString()
+            usersDb.child(userEntity.login!!).updateChildren(map)
+        }
 
 
 }

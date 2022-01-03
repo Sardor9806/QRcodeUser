@@ -52,7 +52,7 @@ class Login : AppCompatActivity() {
                     if(it.login==binding.addLogin.text.toString() && it.password==binding.parol.text.toString())
                     {
                         startActivity(Intent(this,MainActivity::class.java))
-                        userViewModel.insertUser(Roomentity(userName = it.login.toString()))
+                        userViewModel.insertUser(Roomentity(userName = it.login.toString(), passwor = it.password.toString()))
                         finish()
                     }
                 }

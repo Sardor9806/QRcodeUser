@@ -23,6 +23,7 @@ import com.budiyev.android.codescanner.DecodeCallback
 import com.budiyev.android.codescanner.ErrorCallback
 import com.budiyev.android.codescanner.ScanMode
 import com.example.user.R
+import com.example.user.constants.Constants
 import com.example.user.databinding.ActivityMainBinding
 import com.example.user.entity.Locationentity
 import com.example.user.entity.UserEntity
@@ -34,11 +35,12 @@ import com.example.user.viewModel.LoginViewModel
 import com.example.user.webView.OpenWebView
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.firebase.database.FirebaseDatabase
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
-
+    val usersDb = FirebaseDatabase.getInstance().getReference(Constants.USERS)
     private val codeScanner: CodeScanner by lazy { CodeScanner(this, binding.qrScaneer) }
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -51,6 +53,7 @@ class MainActivity : AppCompatActivity() {
         ViewModelProviders.of(this).get(DomenViewModel::class.java)
     }
     private val userViewModel:UserViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -65,7 +68,6 @@ class MainActivity : AppCompatActivity() {
         }catch (e:Exception)
         {
             Toast.makeText(this, "Xatolik:  $e", Toast.LENGTH_LONG).show()
-            sardor
         }
 
     }
@@ -180,11 +182,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+
         codeScanner.startPreview()
     }
 
     override fun onPause() {
         codeScanner.releaseResources()
         super.onPause()
+
     }
 }
