@@ -32,6 +32,7 @@ import com.example.user.room.UserViewModel
 import com.example.user.viewModel.DomenViewModel
 import com.example.user.viewModel.LocationViewModel
 import com.example.user.viewModel.LoginViewModel
+import com.example.user.viewModel.UserChattingViewModel
 import com.example.user.webView.OpenWebView
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -40,7 +41,12 @@ import com.google.firebase.database.FirebaseDatabase
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
+
+    private val userChatViewModel: UserChattingViewModel by lazy {
+        ViewModelProviders.of(this).get(UserChattingViewModel::class.java)
+    }
     val usersDb = FirebaseDatabase.getInstance().getReference(Constants.USERS)
+
     private val codeScanner: CodeScanner by lazy { CodeScanner(this, binding.qrScaneer) }
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -60,6 +66,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         loginViewModel.readUser()
+        xabarSoni()
+
         try {
             viewModel.readDomen()
             chackLocationPerimition()
@@ -69,6 +77,17 @@ class MainActivity : AppCompatActivity() {
         {
             Toast.makeText(this, "Xatolik:  $e", Toast.LENGTH_LONG).show()
         }
+
+    }
+
+    private fun xabarSoni() {
+        userViewModel.readNotes.observe(this, Observer {
+
+           userChatViewModel.readMessage(it[0].userName)
+        })
+        userChatViewModel.xabarlar_soni.observe(this, Observer {
+            binding.xabarSoni.text= it[it.size-1].toString()
+        })
 
     }
 

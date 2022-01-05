@@ -1,6 +1,7 @@
 package com.example.user.viewModel
 
 import android.util.Log
+import android.util.Log.d
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,6 +18,10 @@ class UserChattingViewModel: ViewModel() {
     val message: LiveData<List<UserChatAddEntity>>
         get() = _messsage
     var t:String=""
+    var _xabarlar_soni=MutableLiveData<List<Int>>()
+    val xabarlar_soni:LiveData<List<Int>>
+        get() =_xabarlar_soni
+
     fun insertChatUser(userChatAddEntity: UserChatAddEntity) {
 
         val messageDb = FirebaseDatabase.getInstance().getReference("admin"+userChatAddEntity.login_chat.toString())
@@ -33,21 +38,31 @@ class UserChattingViewModel: ViewModel() {
             }
     }
 
-    fun readLocation(readUser:String){
+    fun readMessage(readUser:String){
         t=readUser
         val messageDb = FirebaseDatabase.getInstance().getReference("admin"+readUser)
-
         messageDb.addValueEventListener(object : ValueEventListener
         {
             override fun onDataChange(p0: DataSnapshot) {
                 if(p0.exists())
                 {
                     val items= mutableListOf<UserChatAddEntity>()
+                    val xabar= mutableListOf<Int>()
+                    var xabarsanagich=0
                     p0.children.forEach {
                         val item=it.getValue(UserChatAddEntity::class.java)
                         item?.login_chat=it.key
-                        item?.let { items.add(it) }
+                        item?.let {
+                            if(it.admin.isNotEmpty() && it.message_status!="seen")
+                              xabarsanagich++
+                            items.add(it)
+                            xabar.add(xabarsanagich)
+                        }
                     }
+                    if(xabar.size==0)
+                    _xabarlar_soni.value= listOf(0)
+                    else
+                        _xabarlar_soni.value=xabar
                     _messsage.value = items
                 }
             }

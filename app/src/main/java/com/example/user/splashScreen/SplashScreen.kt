@@ -26,11 +26,9 @@ class SplashScreen : AppCompatActivity() {
         setContentView(R.layout.activity_splash_screen)
         supportActionBar?.hide()
         viewModel.readUser()
-
         userViewModel.readNotes.observe(this, Observer { room ->
             if (room.isNotEmpty()) {
                 viewModel.users.observe(this, Observer { user ->
-                    d("sardor","keldiiii")
                     try {
                         if (user.isEmpty()) {
                             startActivity(Intent(this, Login::class.java))

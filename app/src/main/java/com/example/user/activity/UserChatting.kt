@@ -3,6 +3,7 @@ package com.example.user.activity
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
@@ -12,19 +13,32 @@ import com.example.user.adapter.MessageAdapter
 import com.example.user.constants.Constants
 import com.example.user.databinding.ActivityUserChattingBinding
 import com.example.user.entity.UserChatAddEntity
+import com.example.user.notification.PushNotification
+import com.example.user.retrofit.RetrofitInstance
 import com.example.user.room.UserViewModel
 import com.example.user.viewModel.UserChattingViewModel
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.gson.Gson
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class UserChatting : AppCompatActivity(),MessageAdapter.MessageSetOnClickListener {
 
+    val topic=""
+
     val usersDb = FirebaseDatabase.getInstance().getReference(Constants.USERS)
+
     private val userViewModel: UserViewModel by viewModels()
+
     lateinit var binding: ActivityUserChattingBinding
+
     private val userChatViewModel: UserChattingViewModel by lazy {
         ViewModelProviders.of(this).get(UserChattingViewModel::class.java)
     }
-
 
     private var messageArray: ArrayList<UserChatAddEntity> = arrayListOf()
 
@@ -37,9 +51,10 @@ class UserChatting : AppCompatActivity(),MessageAdapter.MessageSetOnClickListene
         setContentView(binding.root)
         adapterNew= MessageAdapter(context = this,messageArray,this)
         sendMessage()
-        userChatViewModel.readLocation(intent.getStringExtra("login").toString())
+        userChatViewModel.readMessage(intent.getStringExtra("login").toString())
         readMessage()
     }
+
 
     private fun readMessage() {
         binding.messageRecyclerView.adapter=adapterNew
@@ -59,7 +74,8 @@ class UserChatting : AppCompatActivity(),MessageAdapter.MessageSetOnClickListene
             userChatViewModel.insertChatUser(
                 UserChatAddEntity(
                     login_chat = intent.getStringExtra("login"),
-                    user = binding.messageWriteEdt.text.toString()
+                    user = binding.messageWriteEdt.text.toString(),
+                    message_status = "not seen"
                 )
             )
             binding.messageWriteEdt.text.clear()
@@ -76,8 +92,15 @@ class UserChatting : AppCompatActivity(),MessageAdapter.MessageSetOnClickListene
         alertDialog.show()
     }
 
+
+
+
+
+
+
     override fun onResume() {
         super.onResume()
+        seenMessage()
         userViewModel.readNotes.observe(this, Observer {
             val map = HashMap<String,Any>()
             map["status"] = "online"
@@ -95,6 +118,29 @@ class UserChatting : AppCompatActivity(),MessageAdapter.MessageSetOnClickListene
         }
         )
     }
+    fun seenMessage(){
+        val messageDb = FirebaseDatabase.getInstance().getReference("admin"+intent.getStringExtra("login"))
+        messageDb.addValueEventListener(object : ValueEventListener
+        {
+            override fun onDataChange(p0: DataSnapshot) {
+                if(p0.exists())
+                {
+                    p0.children.forEach {
+                        val item=it.getValue(UserChatAddEntity::class.java)
+                        if(item!!.user=="")
+                        {
+                            var hashMap = HashMap<String,Any>()
+                            hashMap.put("message_status","seen")
+                            it.ref.updateChildren(hashMap)
+                        }
+                    }
 
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+    }
 
 }

@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.user.R
 import com.example.user.entity.UserChatAddEntity
+import com.google.android.material.card.MaterialCardView
 
 class MessageAdapter(val context:Context,val messageList:ArrayList<UserChatAddEntity>,val listener:MessageSetOnClickListener):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -37,6 +38,15 @@ class MessageAdapter(val context:Context,val messageList:ArrayList<UserChatAddEn
             val viewHolder = holder as SendViewHolder
             viewHolder.userMessage.text=currentMessage.user
             viewHolder.delete= currentMessage.login_chat.toString()
+            if(currentMessage.message_status=="seen")
+            {
+                viewHolder.seen.visibility=View.VISIBLE
+                viewHolder.not_seen.visibility=View.GONE
+            }else
+            {
+                viewHolder.seen.visibility=View.GONE
+                viewHolder.not_seen.visibility=View.VISIBLE
+            }
         }
         else{
             val viewHolder = holder as ComeViewHolder
@@ -57,6 +67,8 @@ class MessageAdapter(val context:Context,val messageList:ArrayList<UserChatAddEn
     }
    inner class SendViewHolder(itemview:View):RecyclerView.ViewHolder(itemview){
         val userMessage = itemview.findViewById<TextView>(R.id.send_message_new)
+       val seen=itemview.findViewById<MaterialCardView>(R.id.see)
+       val not_seen=itemview.findViewById<MaterialCardView>(R.id.not_see)
         var delete:String=""
         init {
             itemview.setOnClickListener {

@@ -15,14 +15,28 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.User"
         android:usesCleartextTraffic="true">
+
+
+        <service
+            android:name=".firebaseServis.FireBaseService"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+
+        </service>
+
+
         <activity
-            android:screenOrientation="portrait"
             android:name=".activity.UserChatting"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
-            android:screenOrientation="portrait"
             android:name=".splashScreen.SplashScreen"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,16 +45,16 @@
         </activity>
         <activity
             android:name=".login.Login"
-            android:screenOrientation="portrait"
-            android:exported="true"></activity>
+            android:exported="true"
+            android:screenOrientation="portrait"></activity>
         <activity
-            android:screenOrientation="portrait"
             android:name=".activity.MainActivity"
-            android:exported="true"></activity>
+            android:exported="true"
+            android:screenOrientation="portrait"></activity>
         <activity
-            android:screenOrientation="portrait"
             android:name=".webView.OpenWebView"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
