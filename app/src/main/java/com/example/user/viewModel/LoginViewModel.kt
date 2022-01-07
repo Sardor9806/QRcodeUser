@@ -4,9 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.user.constants.Constants
-import com.example.user.entity.DomenEntity
 import com.example.user.entity.UserEntity
-import com.example.user.firebaseServis.FireBaseService
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase

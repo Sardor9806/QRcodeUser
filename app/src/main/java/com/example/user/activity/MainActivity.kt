@@ -67,7 +67,6 @@ class MainActivity : AppCompatActivity() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         loginViewModel.readUser()
         xabarSoni()
-
         try {
             viewModel.readDomen()
             chackLocationPerimition()
@@ -131,23 +130,27 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
-
     fun startScaneer() {
 
         codeScanner.camera = CodeScanner.CAMERA_BACK
+
         codeScanner.formats = CodeScanner.ALL_FORMATS
+
         codeScanner.autoFocusMode = AutoFocusMode.SAFE
+
         codeScanner.scanMode = ScanMode.SINGLE
+
         codeScanner.isAutoFocusEnabled = true
+
         codeScanner.isFlashEnabled = false
+
         codeScanner.decodeCallback = DecodeCallback { result ->
             runOnUiThread {
                 val vibrator = getSystemService(VIBRATOR_SERVICE) as Vibrator
                 if (Build.VERSION.SDK_INT >= 26) {
                     vibrator.vibrate(
                         VibrationEffect.createOneShot(
-                            1000,
+                            500,
                             VibrationEffect.DEFAULT_AMPLITUDE
                         )
                     )

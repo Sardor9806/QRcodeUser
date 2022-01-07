@@ -96,7 +96,7 @@ class Login : AppCompatActivity() {
                 Toast.makeText(this, "Camera uchun ruxsat bering!!", Toast.LENGTH_SHORT).show()
             }
             if (grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "Joylashuvni olish uchun ruxsat berildi", Toast.LENGTH_SHORT).show()
+               Toast.makeText(this, "Joylashuvni olish uchun ruxsat berildi", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(this, "Joylashuvni olish uchun ruxsat bering!!", Toast.LENGTH_SHORT).show()
             }
