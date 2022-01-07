@@ -1,6 +1,7 @@
 package com.example.user.activity
 
 import android.Manifest
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
@@ -14,6 +15,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -67,7 +69,9 @@ class MainActivity : AppCompatActivity() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         loginViewModel.readUser()
         xabarSoni()
+    foydalanuvchiniTekshirish()
         try {
+           /// online()
             viewModel.readDomen()
             chackLocationPerimition()
             startScaneer()
@@ -76,6 +80,31 @@ class MainActivity : AppCompatActivity() {
         {
             Toast.makeText(this, "Xatolik:  $e", Toast.LENGTH_LONG).show()
         }
+        reklama()
+    }
+
+    private fun reklama() {
+        binding.imagess.setOnClickListener {
+            var alertDialog = AlertDialog.Builder(this)
+            alertDialog.setTitle("Muallif Sardor Safarov")
+            alertDialog.setMessage("Murojat uchun: +998995056698\nTg:@sardor1998_1\nGmail:zomin000s@gmail.com")
+            alertDialog.setPositiveButton("ok"){ dialogInterface: DialogInterface, i: Int -> }
+            alertDialog.show()
+        }
+    }
+
+    private fun foydalanuvchiniTekshirish() {
+        userViewModel.readNotes.observe(this, Observer {room->
+            loginViewModel.users.observe(this, Observer { user->
+                if(!user.contains(UserEntity(room[0].userName,room[0].passwor,"offline")))
+                {
+                    userViewModel.deleteAllUser()
+                   startActivity(Intent(this,Login::class.java))
+                    finish()
+                }
+            })
+        })
+
 
     }
 
@@ -203,14 +232,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
-        super.onResume()
-
         codeScanner.startPreview()
+        super.onResume()
     }
+
 
     override fun onPause() {
         codeScanner.releaseResources()
         super.onPause()
 
     }
+
 }

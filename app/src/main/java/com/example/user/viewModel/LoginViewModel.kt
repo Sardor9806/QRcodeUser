@@ -13,9 +13,6 @@ import com.google.firebase.messaging.FirebaseMessaging
 
 class LoginViewModel: ViewModel() {
 
-
-
-
     private  val usersDb = FirebaseDatabase.getInstance().getReference(Constants.USERS)
 
     private val _users = MutableLiveData<List<UserEntity>>()

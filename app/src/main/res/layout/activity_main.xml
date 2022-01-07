@@ -6,10 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".activity.MainActivity">
 
+
+
     <com.budiyev.android.codescanner.CodeScannerView
         android:id="@+id/qr_scaneer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:foregroundGravity="right"
+        android:foregroundTint="@color/black"
         app:autoFocusButtonColor="@color/white"
         app:frameAspectRatioHeight="1"
         app:frameAspectRatioWidth="1"
@@ -22,8 +26,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:maskColor="#77000000"
-        />
+        app:maskColor="#77000000" />
+    <ImageView
+        android:id="@+id/imagess"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:backgroundTint="#77000000"
+        android:src="@mipmap/sardorbek"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/chat"

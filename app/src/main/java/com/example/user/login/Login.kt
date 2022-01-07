@@ -26,8 +26,8 @@ class Login : AppCompatActivity() {
 
 
     private var PERMISSIONS: Array<String> = arrayOf(
-        Manifest.permission.CAMERA,
-        Manifest.permission.ACCESS_COARSE_LOCATION,
+        Manifest.permission.CAMERA
+      //  Manifest.permission.ACCESS_COARSE_LOCATION,
     )
 
     private val userViewModel: UserViewModel by viewModels()
@@ -95,11 +95,11 @@ class Login : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "Camera uchun ruxsat bering!!", Toast.LENGTH_SHORT).show()
             }
-            if (grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-               Toast.makeText(this, "Joylashuvni olish uchun ruxsat berildi", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "Joylashuvni olish uchun ruxsat bering!!", Toast.LENGTH_SHORT).show()
-            }
+//            if (grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+//               Toast.makeText(this, "Joylashuvni olish uchun ruxsat berildi", Toast.LENGTH_SHORT).show()
+//            } else {
+//                Toast.makeText(this, "Joylashuvni olish uchun ruxsat bering!!", Toast.LENGTH_SHORT).show()
+//            }
         }
     }
 
