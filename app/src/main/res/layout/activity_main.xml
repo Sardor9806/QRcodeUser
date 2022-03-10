@@ -6,68 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".activity.MainActivity">
 
-
-
-    <com.budiyev.android.codescanner.CodeScannerView
-        android:id="@+id/qr_scaneer"
+    <FrameLayout
+        android:id="@+id/main_fragmet_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:foregroundGravity="right"
-        android:foregroundTint="@color/black"
-        app:autoFocusButtonColor="@color/white"
-        app:frameAspectRatioHeight="1"
-        app:frameAspectRatioWidth="1"
-        app:frameColor="@color/white"
-        app:frameCornersRadius="20dp"
-        app:frameCornersSize="60dp"
-        app:frameSize="0.75"
-        app:frameThickness="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:maskColor="#77000000" />
-    <ImageView
-        android:id="@+id/imagess"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:backgroundTint="#77000000"
-        android:src="@mipmap/sardorbek"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/chat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="30dp"
-        android:src="@drawable/ic_baseline_chat_24"
-        app:tint="@color/white"
-        app:backgroundTint="#4901B1"
-        android:backgroundTint="#4901B1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="-10dp"
-        android:layout_marginEnd="-12dp"
-        android:backgroundTint="#D60000"
-        app:cardCornerRadius="100dp"
-        app:layout_constraintEnd_toStartOf="@+id/chat"
-        app:layout_constraintTop_toBottomOf="@+id/chat">
-        <TextView
-            android:id="@+id/xabar_soni"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            />
-    </com.google.android.material.card.MaterialCardView>
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

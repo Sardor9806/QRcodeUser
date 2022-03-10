@@ -4,7 +4,6 @@ import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
@@ -15,9 +14,6 @@ import com.example.user.constants.Constants
 import com.example.user.databinding.ActivityUserChattingBinding
 import com.example.user.entity.UserChatAddEntity
 import com.example.user.entity.UserEntity
-import com.example.user.login.Login
-import com.example.user.notification.PushNotification
-import com.example.user.retrofit.RetrofitInstance
 import com.example.user.room.UserViewModel
 import com.example.user.viewModel.LoginViewModel
 import com.example.user.viewModel.UserChattingViewModel
@@ -25,14 +21,13 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.gson.Gson
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class UserChatting : AppCompatActivity(),MessageAdapter.MessageSetOnClickListener {
 
-    val topic=""
+
+
+
+
     private val loginViewModel: LoginViewModel by lazy { ViewModelProviders.of(this).get(
         LoginViewModel::class.java) }
 
@@ -54,12 +49,13 @@ class UserChatting : AppCompatActivity(),MessageAdapter.MessageSetOnClickListene
         binding = ActivityUserChattingBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
         adapterNew= MessageAdapter(context = this,messageArray,this)
         sendMessage()
         userChatViewModel.readMessage(intent.getStringExtra("login").toString())
         readMessage()
         loginViewModel.readUser()
-        foydalanuvchiniTekshirish()
+//        foydalanuvchiniTekshirish()
     }
 
 
@@ -94,7 +90,7 @@ class UserChatting : AppCompatActivity(),MessageAdapter.MessageSetOnClickListene
                 if(!user.contains(UserEntity(room[0].userName,room[0].passwor,"online")))
                 {
                     userViewModel.deleteAllUser()
-                    startActivity(Intent(this, Login::class.java))
+                   // startActivity(Intent(this, Login::class.java))
                     finish()
                 }
             })

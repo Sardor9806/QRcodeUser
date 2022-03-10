@@ -27,7 +27,7 @@ class UserViewModel(application: Application): AndroidViewModel(application) {
                 notesRepository.insertNotes(notesEntity)
             }catch (e: Exception)
             {
-                Log.d("sardor", "NotesViewMode insertNotes")
+                Log.d("sardor", "UserViewModel insertNotes")
             }
         }
     }
@@ -40,7 +40,7 @@ class UserViewModel(application: Application): AndroidViewModel(application) {
                 notesRepository.deleteAllNotes()
             }catch (e: Exception)
             {
-                Log.d("sardor", "NotesViewMode deleteAllNotes")
+                Log.d("sardor", "UserViewModel deleteAllNotes")
             }
 
         }

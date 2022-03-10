@@ -4,6 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/QRcodeUser/app/src/main/res/layout/activity_login.xml" value="0.29322916666666665" />
+        <entry key="..\:/QRcodeUser/app/src/main/res/layout/activity_main.xml" value="0.2887179487179487" />
+        <entry key="..\:/QRcodeUser/app/src/main/res/layout/activity_splash_screen.xml" value="0.29322916666666665" />
+        <entry key="..\:/QRcodeUser/app/src/main/res/layout/fragment_login.xml" value="0.29322916666666665" />
+        <entry key="..\:/QRcodeUser/app/src/main/res/layout/fragment_q_rcode_scaner.xml" value="0.29322916666666665" />
+        <entry key="..\:/QRcodeUser/app/src/main/res/layout/fragment_splashscreen.xml" value="0.29322916666666665" />
         <entry key="..\:/QRcodeUser1/app/src/main/res/drawable/come_message_bacground.xml" value="0.309375" />
         <entry key="..\:/QRcodeUser1/app/src/main/res/layout/activity_login.xml" value="0.29322916666666665" />
         <entry key="..\:/QRcodeUser1/app/src/main/res/layout/activity_main.xml" value="0.29322916666666665" />
