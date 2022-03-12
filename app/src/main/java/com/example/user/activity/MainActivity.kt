@@ -24,18 +24,17 @@ class MainActivity : AppCompatActivity() {
        lateinit var binding: ActivityMainBinding
       private var PERMISSIONS: Array<String> = arrayOf(
         Manifest.permission.CAMERA
-        //  Manifest.permission.ACCESS_COARSE_LOCATION,
     )
         override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
        supportFragmentManager.beginTransaction().replace(R.id.main_fragmet_layout,SplashscreenFragment()).commit()
-            chackPerimition()
+          chackPerimition()
     }
 
 
-    /*---------------Ruxsat berish-------------------*/
+//    /*---------------Ruxsat berish-------------------*/
     private fun chackPerimition() {
         if (!hasPermissions(this, *PERMISSIONS)) {
 
@@ -64,6 +63,11 @@ class MainActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == 1) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                D.d("1")
+            }
+            else
+            {
+              chackPerimition()
             }
         }
     }
